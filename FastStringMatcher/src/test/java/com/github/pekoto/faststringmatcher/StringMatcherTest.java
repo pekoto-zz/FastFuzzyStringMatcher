@@ -8,6 +8,7 @@ public class StringMatcherTest {
 	@Test
 	public void testSomething() {
 		assertTrue(true);
+		
 	}
 	
 }
