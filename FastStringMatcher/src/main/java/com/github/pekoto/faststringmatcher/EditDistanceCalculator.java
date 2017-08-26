@@ -2,27 +2,33 @@ package com.github.pekoto.faststringmatcher;
 
 /**
  * Calculates the number of operations it takes to turn one string into another.
- * Also known as the Levenshtein distance.
- * See <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia</a>
+ * Also known as the Levenshtein distance.  
+ * 
+ * This implementation uses the iterative approach with two matrix rows.
+ * Case insensitive.
+ * 
+ * See <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia</a>.
+ * 
  * <p>
  * Available operations are:
  * <ul>
  * 	<li>substitution
  *  <li>insertion
  * 	<li>deletion
- * <ul>
+ * </ul>
  * <p>
- * Example:
+ * <strong>Example:</strong><br>
  * To turn kitten --> sitting:
- * 	- kitten --> sitten (substitute "s" for "k")
- *  - sitten --> sittin (substitute "e" for "i")
- *  - sittin --> sitting (insert "g")
+ * <p>
+ * 	kitten --> sitten (substitute "s" for "k")<br>
+ *  sitten --> sittin (substitute "e" for "i")<br>
+ *  sittin --> sitting (insert "g")<br>
+ *  <p>
  * Edit distance = 3
  * <p> 
- * This class uses the iterative approach with two matrix rows.
- * Case insensitive.
  * 
  * @author Graham McRobbie
+ * 
  */
 public class EditDistanceCalculator {
 
