@@ -7,7 +7,7 @@ public class EditDistanceCalculatorTest {
 	@Test
 	public void test() {
 		EditDistanceCalculator distanceCalculator = new EditDistanceCalculator();
-		String s1 = "Hat";
+		String s1 = "Tat";
 		String s2 = "Cat";
 		
 		distanceCalculator.calculateEditDistance(s1, s2);
