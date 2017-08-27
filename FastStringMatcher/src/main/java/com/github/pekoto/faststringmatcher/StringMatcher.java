@@ -75,12 +75,15 @@ public class StringMatcher<T> {
 		List<StringSearchResult<T>> results = new ArrayList<StringSearchResult<T>>();
 		
 		keyword = keyword.toLowerCase();
-		searchTree(root, results, keyword, distanceThreshold);
+		searchTree(root, keyword, distanceThreshold, results);
 		
 		return results;
 	}
 	
-	private void searchTree(Node<T> node, List<StringSearchResult<T>> results, String keyword, int distanceThreshold) {
+	// Recursively search the tree, adding any data from nodes within the edit distance threshold.
+	// Results are stored in the results parameter. This is a bit dirty functionally, but since this
+	// method is recursive, it saves a new collection being created/copied with every call.
+	private void searchTree(Node<T> node, String keyword, int distanceThreshold, List<StringSearchResult<T>> results) {
 		int currentDistance = distanceCalculator.calculateEditDistance(node.normalizedKeyword, keyword);
 		int minDistance = currentDistance - distanceThreshold;
 		int maxDistance = currentDistance + distanceThreshold;
@@ -95,7 +98,7 @@ public class StringMatcher<T> {
 		
 		for(Integer childKey: childKeysWithinDistanceThreshold) {
 			Node<T> child = node.getChild(childKey);
-			searchTree(child, results, keyword, distanceThreshold);
+			searchTree(child, keyword, distanceThreshold, results);
 		}
 	}
 	
