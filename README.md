@@ -1,2 +1,2 @@
 # FastStringMatcher
-A Levenshtein automaton trie for fast string matching
+A BK tree implementation for fast in-memory string matching.
