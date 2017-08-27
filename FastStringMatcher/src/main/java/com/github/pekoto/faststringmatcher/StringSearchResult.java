@@ -31,4 +31,9 @@ public class StringSearchResult<T> {
 	public float getMatchPercentage() {
 		return matchPercentage;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s/%s/%f", keyword, associatedData, matchPercentage);
+	}
 }

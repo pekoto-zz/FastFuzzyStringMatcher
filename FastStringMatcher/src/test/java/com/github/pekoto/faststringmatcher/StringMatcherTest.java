@@ -26,26 +26,72 @@ public class StringMatcherTest {
 		
 		stringMatcher.Add("Test", "String with uppercase char");
 		stringMatcher.Add("test", "String with all lowercase chars");
+		
 		stringMatcher.Add("This is a test", "Multiple word string");
+		
 		stringMatcher.Add("Cat", "Short string");
 		stringMatcher.Add("Hat", "Similar short string");
 	}
 	
 	@Test
-	public void testOneHundredPercentMatch() {
-		List<StringSearchResult<String>> results = stringMatcher.search("01234", 100.0f);
+	public void testOneHundredPercentMatching() {
+		StringSearchResults<String> results = stringMatcher.search("01234", 100.0f);
 		
 		assertEquals(1, results.size());
 		assertEquals("01234", results.get(0).getKeyword());
 	}
 	
-	// TODO 75% match
+	@Test
+	public void testSeventyFivePercentMatching() {
+		StringSearchResults<String> results = stringMatcher.search("0123456789", 75.0f);
+		
+		assertEquals(3, results.size());
+		assertTrue(results.containsKeyword("0123456789"));
+		assertTrue(results.containsKeyword("012345678"));
+		assertTrue(results.containsKeyword("01234567"));
+	}
 	
-	// TODO 50% match
+	@Test
+	public void testFiftyPercentMatching() {
+		StringSearchResults<String> results = stringMatcher.search("0123456789", 50.0f);
+		
+		assertEquals(6, results.size());
+		assertTrue(results.containsKeyword("0123456789"));
+		assertTrue(results.containsKeyword("012345678"));
+		assertTrue(results.containsKeyword("01234567"));
+		assertTrue(results.containsKeyword("0123456"));
+		assertTrue(results.containsKeyword("012345"));
+		assertTrue(results.containsKeyword("01234"));
+	}
 	
-	// TODO 25% match
+	@Test
+	public void testTwentyFivePercentMatching() {
+		StringSearchResults<String> results = stringMatcher.search("0123456789", 25.0f);
+		
+		assertEquals(8, results.size());
+		assertTrue(results.containsKeyword("0123456789"));
+		assertTrue(results.containsKeyword("012345678"));
+		assertTrue(results.containsKeyword("01234567"));
+		assertTrue(results.containsKeyword("0123456"));
+		assertTrue(results.containsKeyword("012345"));
+		assertTrue(results.containsKeyword("01234"));
+		assertTrue(results.containsKeyword("0123"));
+		assertTrue(results.containsKeyword("012"));
+	}
+
+	@Test
+	public void testEditDistanceMatching() {
+		StringSearchResults<String> results = stringMatcher.search("01234", 1);
+		
+		assertEquals(3, results.size());
+		assertTrue(results.containsKeyword("01234"));
+		assertTrue(results.containsKeyword("0123"));
+		assertTrue(results.containsKeyword("012345"));
+	}
 	
-	// TODO edit distance match
+	// TODO order of results (should descend from highest match % to lowest match %
+	
+	// TODO % match in result is accurate
 	
 	// TODO duplicate strings
 	

@@ -65,14 +65,14 @@ public class StringMatcher<T> {
 		}
 	}
 	
-	public List<StringSearchResult<T>> search(String keyword, float matchPercentage) {
+	public StringSearchResults<T> search(String keyword, float matchPercentage) {
 		int distanceThreshold = convertPercentageToEditDistance(keyword, matchPercentage);
 		
 		return search(keyword, distanceThreshold);
 	}
 	
-	public List<StringSearchResult<T>> search(String keyword, int distanceThreshold) {
-		List<StringSearchResult<T>> results = new ArrayList<StringSearchResult<T>>();
+	public StringSearchResults<T> search(String keyword, int distanceThreshold) {
+		StringSearchResults<T> results = new StringSearchResults<T>();
 		
 		keyword = keyword.toLowerCase();
 		searchTree(root, keyword, distanceThreshold, results);
@@ -89,7 +89,7 @@ public class StringMatcher<T> {
 		int maxDistance = currentDistance + distanceThreshold;
 		
 		if(currentDistance <= distanceThreshold) {
-			float percentageDifference = getPercentageDifference(node.normalizedKeyword, currentDistance);
+			float percentageDifference = getPercentageDifference(keyword, currentDistance);
 			StringSearchResult<T> result = new StringSearchResult<T>(node.originalKeyword, node.associatedData, percentageDifference);
 			results.add(result);
 		}
@@ -110,6 +110,11 @@ public class StringMatcher<T> {
 		return 100.0f - (((float)editDistance/keyword.length()) * 100.0f);
 	}
 	
+	/**
+	 * A node in the BK Tree.
+	 *
+	 * @param <T> The type of data associated with each string keyword.
+	 */
 	private static class Node<T> {
 		private CharSequence originalKeyword;
 		private CharSequence normalizedKeyword;
