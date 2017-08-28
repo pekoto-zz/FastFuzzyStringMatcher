@@ -1,4 +1,4 @@
-package com.github.pekoto.faststringmatcher;
+package com.github.pekoto.fastfuzzystringmatcher;
 
 /**
  * A result returned after searching the BK tree.

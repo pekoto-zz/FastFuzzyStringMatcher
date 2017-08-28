@@ -1,4 +1,4 @@
-package com.github.pekoto.faststringmatcher;
+package com.github.pekoto.fastfuzzystringmatcher;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,10 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.github.pekoto.fastfuzzystringmatcher.StringMatcher;
+import com.github.pekoto.fastfuzzystringmatcher.StringSearchResult;
+import com.github.pekoto.fastfuzzystringmatcher.StringSearchResults;
 
 public class StringMatcherTest {
 

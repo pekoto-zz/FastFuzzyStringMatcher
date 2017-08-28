@@ -1,8 +1,10 @@
-package com.github.pekoto.faststringmatcher;
+package com.github.pekoto.fastfuzzystringmatcher;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.github.pekoto.fastfuzzystringmatcher.EditDistanceCalculator;
 
 public class EditDistanceCalculatorTest {
 

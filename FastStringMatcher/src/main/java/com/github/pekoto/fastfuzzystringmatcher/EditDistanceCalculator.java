@@ -1,4 +1,4 @@
-package com.github.pekoto.faststringmatcher;
+package com.github.pekoto.fastfuzzystringmatcher;
 
 /**
  * Calculates the number of operations it takes to turn one string into another.

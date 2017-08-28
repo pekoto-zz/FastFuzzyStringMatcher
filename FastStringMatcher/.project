@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>FastStringMatcher</name>
+	<name>FastFuzzyStringMatcher</name>
 	<comment></comment>
 	<projects>
 	</projects>

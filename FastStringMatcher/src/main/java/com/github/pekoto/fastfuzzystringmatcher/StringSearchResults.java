@@ -1,4 +1,4 @@
-package com.github.pekoto.faststringmatcher;
+package com.github.pekoto.fastfuzzystringmatcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
