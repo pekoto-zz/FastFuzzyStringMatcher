@@ -77,6 +77,8 @@ public class StringMatcher<T> {
 		keyword = keyword.toLowerCase();
 		searchTree(root, keyword, distanceThreshold, results);
 		
+		results.sortByClosestMatch();
+		
 		return results;
 	}
 	

@@ -30,7 +30,7 @@ public class StringMatcherTest {
 		stringMatcher.Add("This is a test", "Multiple word string");
 		
 		stringMatcher.Add("Cat", "Short string");
-		stringMatcher.Add("Hat", "Similar short string");
+		stringMatcher.Add("Bats", "Slightly longer short string");
 	}
 	
 	@Test
@@ -89,9 +89,22 @@ public class StringMatcherTest {
 		assertTrue(results.containsKeyword("012345"));
 	}
 	
-	// TODO order of results (should descend from highest match % to lowest match %
+	@Test
+	public void testResultsInDescendingOrder() {
+		StringSearchResults<String> results = stringMatcher.search("Fat", 2);
+		
+		assertEquals("Cat", results.get(0).getKeyword());
+		assertEquals("Bats", results.get(1).getKeyword());
+	}
 	
-	// TODO % match in result is accurate
+	@Test
+	public void testResultPercentage() {
+		StringSearchResults<String> results = stringMatcher.search("Cat", 2);
+		
+		// Float equality inaccuracy requires checking against some epsilon
+		assertTrue(Math.abs(results.get(0).getMatchPercentage() - 100.0f) < 0.1);
+		assertTrue(Math.abs(results.get(1).getMatchPercentage() - 33.3f) < 0.1);
+	}
 	
 	// TODO duplicate strings
 	
