@@ -1,7 +1,7 @@
 package com.github.pekoto.faststringmatcher;
 
 /**
- * A result from searching the BK tree.
+ * A result returned after searching the BK tree.
  * 
  * @author Graham McRobbie
  *
