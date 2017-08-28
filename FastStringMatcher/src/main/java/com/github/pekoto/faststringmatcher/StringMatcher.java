@@ -46,19 +46,28 @@ public class StringMatcher<T> {
 	private EditDistanceCalculator distanceCalculator = new EditDistanceCalculator();
 	
 	public void Add(CharSequence keyword, T associatedData) {
+		
+		if(keyword == null) {
+			throw new IllegalArgumentException("Strings must not be null");
+		}
+		
+		if(keyword.length() == 0) {
+			throw new IllegalArgumentException("Strings must not be empty");
+		}
+		
 		if(root == null) {
 			root = new Node<T>(keyword, associatedData);
 		} else {
 			Node<T> current = root;
 			int distance = distanceCalculator.calculateEditDistance(current.normalizedKeyword, keyword);
 			
-			while(current.containsChildWithDistance(distance)) {
-				if(distance == 0) {
-					return;	// Duplicate?
-				}
-				
+			while(current.containsChildWithDistance(distance)) {				
 				current = current.getChild(distance);
 				distance = distanceCalculator.calculateEditDistance(current.normalizedKeyword, keyword);
+				
+				if(distance == 0) {
+					return;	// Duplicate
+				}
 			}
 			
 			current.addChild(distance, keyword, associatedData);
@@ -91,7 +100,7 @@ public class StringMatcher<T> {
 		int maxDistance = currentDistance + distanceThreshold;
 		
 		if(currentDistance <= distanceThreshold) {
-			float percentageDifference = getPercentageDifference(keyword, currentDistance);
+			float percentageDifference = getPercentageDifference(node.normalizedKeyword, keyword, currentDistance);
 			StringSearchResult<T> result = new StringSearchResult<T>(node.originalKeyword, node.associatedData, percentageDifference);
 			results.add(result);
 		}
@@ -108,8 +117,9 @@ public class StringMatcher<T> {
 		return keyword.length() - (Math.round((keyword.length() * matchPercentage)/100.0f));
 	}
 	
-	private float getPercentageDifference(CharSequence keyword, int editDistance) {
-		return 100.0f - (((float)editDistance/keyword.length()) * 100.0f);
+	private float getPercentageDifference(CharSequence keyword, CharSequence wordToMatch, int editDistance) {
+		int longestWordLength = Math.max(keyword.length(), wordToMatch.length());
+		return 100.0f - (((float)editDistance/longestWordLength) * 100.0f);
 	}
 	
 	/**
@@ -157,6 +167,11 @@ public class StringMatcher<T> {
 			
 			Node<T> child = new Node<T>(keyword, associatedData);
 			children.put(key, child);
-		}	
+		}
+		
+		@Override
+		public String toString() {
+			return String.format("%s/%s/%s", originalKeyword, normalizedKeyword, associatedData);
+		}
 	}
 }

@@ -103,18 +103,34 @@ public class StringMatcherTest {
 		
 		// Float equality inaccuracy requires checking against some epsilon
 		assertTrue(Math.abs(results.get(0).getMatchPercentage() - 100.0f) < 0.1);
-		assertTrue(Math.abs(results.get(1).getMatchPercentage() - 33.3f) < 0.1);
+		assertTrue(Math.abs(results.get(1).getMatchPercentage() - 50.0f) < 0.1);
 	}
 	
-	// TODO duplicate strings
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddEmptyString() {
+		// Throws IllegalArgumentException
+		stringMatcher.Add("", "Empty string");
+	}
 	
-	// TODO empty strings
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddNullString() {
+		// Throws IllegalArgumentException
+		stringMatcher.Add(null, "Null string");
+	}
 	
-	// TODO null strings
+	@Test
+	public void testCaseSensitive() {
+		StringSearchResults<String> results = stringMatcher.search("cat", 100.0f);
+		
+		assertTrue(results.containsKeyword("Cat"));
+	}
 	
-	// TODO case sensitive
-	
-	// TODO multiple words
+	@Test
+	public void testMultipleWords() {
+		StringSearchResults<String> results = stringMatcher.search("This is a vest", 90.0f);
+		
+		assertTrue(results.containsKeyword("This is a test"));
+	}
 	
 	@Test
 	public void testAssociatedData() {
