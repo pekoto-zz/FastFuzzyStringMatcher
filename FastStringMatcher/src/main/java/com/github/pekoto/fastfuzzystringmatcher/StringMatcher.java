@@ -178,17 +178,6 @@ public class StringMatcher<T> {
 			return String.format("%s/%s/%s", originalKeyword, normalizedKeyword, associatedData);
 		}
 		
-		/*func printTree(level: Int = 0) {
-	        for _ in 0 ..< level {
-	            print("\t", terminator: " ")
-	        }
-	        
-	        print(data)
-	        
-	        for child in _children {
-	            child.printTree(level: level + 1)
-	        }
-	    }*/
 		public void printHierarchy(int level) {
 			for(int i = 0; i < level; i++) {
 				System.out.print("\t");
