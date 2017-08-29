@@ -99,7 +99,7 @@ public class EditDistanceCalculatorTest {
 	}
 	
 	@Test
-	public void testStringsSame() {
+	public void testIdenticalStrings() {
 		String s1 = "test";
 		String s2 = "test";
 		

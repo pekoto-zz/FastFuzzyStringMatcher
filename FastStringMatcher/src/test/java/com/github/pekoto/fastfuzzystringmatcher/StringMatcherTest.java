@@ -138,7 +138,7 @@ public class StringMatcherTest {
 	
 	@Test
 	public void testAssociatedData() {
-		List<StringSearchResult<String>> results = stringMatcher.search("01234", 100.0f);
+		StringSearchResults<String> results = stringMatcher.search("01234", 100.0f);
 		
 		assertEquals(1, results.size());
 		assertEquals("5 digit long string", results.get(0).getAssociatedData());

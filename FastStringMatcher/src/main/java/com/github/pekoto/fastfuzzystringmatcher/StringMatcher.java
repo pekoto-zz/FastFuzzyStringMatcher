@@ -122,6 +122,10 @@ public class StringMatcher<T> {
 		return 100.0f - (((float)editDistance/longestWordLength) * 100.0f);
 	}
 	
+	public void printTree() {
+		root.printHierarchy(0);
+	}
+	
 	/**
 	 * A node in the BK Tree.
 	 *
@@ -172,6 +176,31 @@ public class StringMatcher<T> {
 		@Override
 		public String toString() {
 			return String.format("%s/%s/%s", originalKeyword, normalizedKeyword, associatedData);
+		}
+		
+		/*func printTree(level: Int = 0) {
+	        for _ in 0 ..< level {
+	            print("\t", terminator: " ")
+	        }
+	        
+	        print(data)
+	        
+	        for child in _children {
+	            child.printTree(level: level + 1)
+	        }
+	    }*/
+		public void printHierarchy(int level) {
+			for(int i = 0; i < level; i++) {
+				System.out.print("\t");
+			}
+			
+			System.out.println(String.format("-- %s", originalKeyword));
+			
+			if(children != null) {
+				for(Node<T> child: children.values()) {
+					child.printHierarchy(level+1);
+				}
+			}
 		}
 	}
 }
