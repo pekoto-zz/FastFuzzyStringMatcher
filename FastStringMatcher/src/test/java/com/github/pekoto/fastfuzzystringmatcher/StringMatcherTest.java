@@ -141,27 +141,39 @@ public class StringMatcherTest {
 		assertEquals("5 digit long string", results.get(0).getAssociatedData());
 	}
 	
-	// TODO Test ignore spaces
 	@Test
 	public void testIgnoreSpaces() {
-		
-		/*StringMatcher<String> ignoreSpacesMatcher = new StringMatcher<String>(true);
+		StringMatcher<String> ignoreSpacesMatcher = new StringMatcher<String>(MatchingOption.REMOVE_SPACING_AND_LINEBREAKS);
 		
 		ignoreSpacesMatcher.Add("This is a test", "A string with spaces");
-		ignoreSpacesMatcher.Add("This is another test string", "Some other test string");
 		
-		ignoreSpacesMatcher.printTree();*/
+		SearchResultList<String> results = ignoreSpacesMatcher.search("This is  atest", 100.0f);
 		
-		String s1 = "This is a test";
-		
-		s1 = s1.replaceAll("[\\t\\n\\r\\s]", "");
-		
-		System.out.println();
+		assertEquals(1, results.size());
+		assertTrue(results.containsKeyword("This is a test"));
 	}
 	
-	// TODO Test ignore tabs
+	@Test
+	public void testIgnoreTabs() {
+		StringMatcher<String> ignoreTabsMatcher = new StringMatcher<String>(MatchingOption.REMOVE_SPACING_AND_LINEBREAKS);
+
+		ignoreTabsMatcher.Add("\t\tThis is some tabbed data", "A string with tabs");
+		
+		SearchResultList<String> results = ignoreTabsMatcher.search("This is some tabbed \tdata", 100.0f);
+		
+		assertEquals(1, results.size());
+		assertTrue(results.containsKeyword("\t\tThis is some tabbed data"));
+	}
 	
-	// TODO Test ignore line breaks
-	
-	// TODO Test ignore full-width spaces
+	@Test
+	public void testIgnoreLinebreaks() {
+		StringMatcher<String> ignoreLinebreaksMatcher = new StringMatcher<String>(MatchingOption.REMOVE_SPACING_AND_LINEBREAKS);
+		
+		ignoreLinebreaksMatcher.Add("This has\nsome line\nbreaks.", "A string with linebreaks");
+		
+		SearchResultList<String> results = ignoreLinebreaksMatcher.search("This has some line breaks.", 100.0f);
+		
+		assertEquals(1, results.size());
+		assertTrue(results.containsKeyword("This has\nsome line\nbreaks."));
+	}
 }
