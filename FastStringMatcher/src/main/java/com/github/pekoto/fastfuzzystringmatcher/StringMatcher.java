@@ -44,9 +44,15 @@ import java.util.stream.Collectors;
 public class StringMatcher<T> {
 	private Node<T> root;
 	private EditDistanceCalculator distanceCalculator = new EditDistanceCalculator();
+	private MatchingOption matchingOption = MatchingOption.NONE;
+	
+	public StringMatcher() { }
+	
+	public StringMatcher(MatchingOption matchingOption) {
+		this.matchingOption = matchingOption;
+	}
 	
 	public void Add(CharSequence keyword, T associatedData) {
-		
 		if(keyword == null) {
 			throw new IllegalArgumentException("Strings must not be null");
 		}
@@ -55,8 +61,10 @@ public class StringMatcher<T> {
 			throw new IllegalArgumentException("Strings must not be empty");
 		}
 		
+		CharSequence normalizedKeyword = getNormalizedString(keyword);
+				
 		if(root == null) {
-			root = new Node<T>(keyword, associatedData);
+			root = new Node<T>(keyword, normalizedKeyword, associatedData);
 		} else {
 			Node<T> current = root;
 			int distance = distanceCalculator.calculateEditDistance(current.normalizedKeyword, keyword);
@@ -70,20 +78,42 @@ public class StringMatcher<T> {
 				}
 			}
 			
-			current.addChild(distance, keyword, associatedData);
+			current.addChild(distance, keyword, normalizedKeyword, associatedData);
 		}
 	}
 	
-	public StringSearchResults<T> search(String keyword, float matchPercentage) {
-		int distanceThreshold = convertPercentageToEditDistance(keyword, matchPercentage);
-		
-		return search(keyword, distanceThreshold);
+	private CharSequence getNormalizedString(CharSequence str) 
+	{
+		if(matchingOption == MatchingOption.REMOVE_SPACING_AND_LINEBREAKS) {
+			return removeSpacesAndLinebreaks(str);
+		} else {
+			return str;			
+		}
 	}
 	
-	public StringSearchResults<T> search(String keyword, int distanceThreshold) {
-		StringSearchResults<T> results = new StringSearchResults<T>();
+	private CharSequence removeSpacesAndLinebreaks(CharSequence str) {
+		return str.toString().replaceAll("[\\t\\n\\r\\s]", "");
+	}
+	
+	public SearchResultList<T> search(CharSequence keyword, float matchPercentage) {
+		keyword = getNormalizedString(keyword);
+		int distanceThreshold = convertPercentageToEditDistance(keyword, matchPercentage);
 		
-		keyword = keyword.toLowerCase();
+		return searchTree(keyword, distanceThreshold);
+	}
+	
+	private int convertPercentageToEditDistance(CharSequence keyword, float matchPercentage) {
+		return keyword.length() - (Math.round((keyword.length() * matchPercentage)/100.0f));
+	}
+	
+	public SearchResultList<T> search(CharSequence keyword, int distanceThreshold) {
+		keyword = getNormalizedString(keyword);
+		return searchTree(keyword, distanceThreshold);
+	}
+	
+	private SearchResultList<T> searchTree(CharSequence keyword, int distanceThreshold) {
+		SearchResultList<T> results = new SearchResultList<T>();
+		
 		searchTree(root, keyword, distanceThreshold, results);
 		
 		results.sortByClosestMatch();
@@ -94,14 +124,14 @@ public class StringMatcher<T> {
 	// Recursively search the tree, adding any data from nodes within the edit distance threshold.
 	// Results are stored in the results parameter. This is a bit dirty functionally, but since this
 	// method is recursive, it saves a new collection being created/copied with every call.
-	private void searchTree(Node<T> node, String keyword, int distanceThreshold, List<StringSearchResult<T>> results) {
+	private void searchTree(Node<T> node, CharSequence keyword, int distanceThreshold, List<SearchResult<T>> results) {
 		int currentDistance = distanceCalculator.calculateEditDistance(node.normalizedKeyword, keyword);
 		int minDistance = currentDistance - distanceThreshold;
 		int maxDistance = currentDistance + distanceThreshold;
 		
 		if(currentDistance <= distanceThreshold) {
 			float percentageDifference = getPercentageDifference(node.normalizedKeyword, keyword, currentDistance);
-			StringSearchResult<T> result = new StringSearchResult<T>(node.originalKeyword, node.associatedData, percentageDifference);
+			SearchResult<T> result = new SearchResult<T>(node.originalKeyword, node.associatedData, percentageDifference);
 			results.add(result);
 		}
 		
@@ -111,10 +141,6 @@ public class StringMatcher<T> {
 			Node<T> child = node.getChild(childKey);
 			searchTree(child, keyword, distanceThreshold, results);
 		}
-	}
-	
-	private int convertPercentageToEditDistance(CharSequence keyword, float matchPercentage) {
-		return keyword.length() - (Math.round((keyword.length() * matchPercentage)/100.0f));
 	}
 	
 	private float getPercentageDifference(CharSequence keyword, CharSequence wordToMatch, int editDistance) {
@@ -137,9 +163,9 @@ public class StringMatcher<T> {
 		private T associatedData;
 		private HashMap<Integer, Node<T>> children;
 		
-		public Node(CharSequence keyword, T associatedData) {
+		public Node(CharSequence keyword, CharSequence normalizedKeyword, T associatedData) {
 			this.originalKeyword = keyword;
-			this.normalizedKeyword = keyword.toString().toLowerCase();
+			this.normalizedKeyword = normalizedKeyword;
 			this.associatedData = associatedData;
 		}
 		
@@ -164,12 +190,12 @@ public class StringMatcher<T> {
 			return children != null && children.containsKey(key);
 		}
 		
-		public void addChild(int key, CharSequence keyword, T associatedData) {
+		public void addChild(int key, CharSequence keyword, CharSequence normalizedKeyword, T associatedData) {
 			if(children == null) {
 				children = new HashMap<Integer, Node<T>>();
 			}
 			
-			Node<T> child = new Node<T>(keyword, associatedData);
+			Node<T> child = new Node<T>(keyword, normalizedKeyword, associatedData);
 			children.put(key, child);
 		}
 		

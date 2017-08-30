@@ -6,7 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.github.pekoto.fastfuzzystringmatcher.StringMatcher;
-import com.github.pekoto.fastfuzzystringmatcher.StringSearchResults;
+import com.github.pekoto.fastfuzzystringmatcher.SearchResultList;
 
 public class StringMatcherTest {
 
@@ -36,7 +36,7 @@ public class StringMatcherTest {
 	
 	@Test
 	public void testOneHundredPercentMatching() {
-		StringSearchResults<String> results = stringMatcher.search("01234", 100.0f);
+		SearchResultList<String> results = stringMatcher.search("01234", 100.0f);
 		
 		assertEquals(1, results.size());
 		assertEquals("01234", results.get(0).getKeyword());
@@ -44,7 +44,7 @@ public class StringMatcherTest {
 	
 	@Test
 	public void testSeventyFivePercentMatching() {
-		StringSearchResults<String> results = stringMatcher.search("0123456789", 75.0f);
+		SearchResultList<String> results = stringMatcher.search("0123456789", 75.0f);
 		
 		assertEquals(3, results.size());
 		assertTrue(results.containsKeyword("0123456789"));
@@ -54,7 +54,7 @@ public class StringMatcherTest {
 	
 	@Test
 	public void testFiftyPercentMatching() {
-		StringSearchResults<String> results = stringMatcher.search("0123456789", 50.0f);
+		SearchResultList<String> results = stringMatcher.search("0123456789", 50.0f);
 		
 		assertEquals(6, results.size());
 		assertTrue(results.containsKeyword("0123456789"));
@@ -67,7 +67,7 @@ public class StringMatcherTest {
 	
 	@Test
 	public void testTwentyFivePercentMatching() {
-		StringSearchResults<String> results = stringMatcher.search("0123456789", 25.0f);
+		SearchResultList<String> results = stringMatcher.search("0123456789", 25.0f);
 		
 		assertEquals(8, results.size());
 		assertTrue(results.containsKeyword("0123456789"));
@@ -82,7 +82,7 @@ public class StringMatcherTest {
 
 	@Test
 	public void testEditDistanceMatching() {
-		StringSearchResults<String> results = stringMatcher.search("01234", 1);
+		SearchResultList<String> results = stringMatcher.search("01234", 1);
 		
 		assertEquals(3, results.size());
 		assertTrue(results.containsKeyword("01234"));
@@ -92,7 +92,7 @@ public class StringMatcherTest {
 	
 	@Test
 	public void testResultsInDescendingOrder() {
-		StringSearchResults<String> results = stringMatcher.search("Fat", 2);
+		SearchResultList<String> results = stringMatcher.search("Fat", 2);
 		
 		assertEquals("Cat", results.get(0).getKeyword());
 		assertEquals("Bats", results.get(1).getKeyword());
@@ -100,7 +100,7 @@ public class StringMatcherTest {
 	
 	@Test
 	public void testResultPercentage() {
-		StringSearchResults<String> results = stringMatcher.search("Cat", 2);
+		SearchResultList<String> results = stringMatcher.search("Cat", 2);
 		
 		// Float equality inaccuracy requires checking against some epsilon
 		assertTrue(Math.abs(results.get(0).getMatchPercentage() - 100.0f) < 0.1);
@@ -121,23 +121,47 @@ public class StringMatcherTest {
 	
 	@Test
 	public void testCaseSensitive() {
-		StringSearchResults<String> results = stringMatcher.search("cat", 100.0f);
+		SearchResultList<String> results = stringMatcher.search("cat", 100.0f);
 		
 		assertTrue(results.containsKeyword("Cat"));
 	}
 	
 	@Test
 	public void testMultipleWords() {
-		StringSearchResults<String> results = stringMatcher.search("This is a vest", 90.0f);
+		SearchResultList<String> results = stringMatcher.search("This is a vest", 90.0f);
 		
 		assertTrue(results.containsKeyword("This is a test"));
 	}
 	
 	@Test
 	public void testAssociatedData() {
-		StringSearchResults<String> results = stringMatcher.search("01234", 100.0f);
+		SearchResultList<String> results = stringMatcher.search("01234", 100.0f);
 		
 		assertEquals(1, results.size());
 		assertEquals("5 digit long string", results.get(0).getAssociatedData());
 	}
+	
+	// TODO Test ignore spaces
+	@Test
+	public void testIgnoreSpaces() {
+		
+		/*StringMatcher<String> ignoreSpacesMatcher = new StringMatcher<String>(true);
+		
+		ignoreSpacesMatcher.Add("This is a test", "A string with spaces");
+		ignoreSpacesMatcher.Add("This is another test string", "Some other test string");
+		
+		ignoreSpacesMatcher.printTree();*/
+		
+		String s1 = "This is a test";
+		
+		s1 = s1.replaceAll("[\\t\\n\\r\\s]", "");
+		
+		System.out.println();
+	}
+	
+	// TODO Test ignore tabs
+	
+	// TODO Test ignore line breaks
+	
+	// TODO Test ignore full-width spaces
 }

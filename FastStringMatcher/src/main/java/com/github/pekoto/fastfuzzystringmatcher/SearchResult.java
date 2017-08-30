@@ -7,14 +7,14 @@ package com.github.pekoto.fastfuzzystringmatcher;
  *
  * @param <T> The type of data associated with each string keyword.
  */
-public class StringSearchResult<T> {
+public class SearchResult<T> {
 	private CharSequence keyword;
 	private T associatedData;
 	private float matchPercentage;
 	
-	public StringSearchResult() { }
+	public SearchResult() { }
 	
-	public StringSearchResult(CharSequence keyword, T associatedData, float matchPercentage) {
+	public SearchResult(CharSequence keyword, T associatedData, float matchPercentage) {
 		this.keyword = keyword;
 		this.associatedData = associatedData;
 		this.matchPercentage = matchPercentage;

@@ -12,7 +12,7 @@ import java.util.Comparator;
  * @param <T>
  *            The data associated with each result.
  */
-public class StringSearchResults<T> extends ArrayList<StringSearchResult<T>> {
+public class SearchResultList<T> extends ArrayList<SearchResult<T>> {
 
 	/**
 	 * Serialization ID
@@ -28,8 +28,8 @@ public class StringSearchResults<T> extends ArrayList<StringSearchResult<T>> {
 	}
 	
 	// check this is the best place for comparator -- might be better in results?
-	private class SortByClosestMatchComparator implements Comparator<StringSearchResult<T>> {
-		public int compare(StringSearchResult<T> s1, StringSearchResult<T> s2) {
+	private class SortByClosestMatchComparator implements Comparator<SearchResult<T>> {
+		public int compare(SearchResult<T> s1, SearchResult<T> s2) {
 			if (s1.getMatchPercentage() < s2.getMatchPercentage()) {
 				return 1;
 			} else if (s1.getMatchPercentage() > s2.getMatchPercentage()) {
