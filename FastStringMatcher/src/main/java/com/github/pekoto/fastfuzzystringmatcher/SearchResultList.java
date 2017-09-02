@@ -27,6 +27,12 @@ public class SearchResultList<T> extends ArrayList<SearchResult<T>> {
         Collections.sort(this, new SortByClosestMatchComparator());
 	}
 	
+	public void print() {
+		for(SearchResult<T> result : this) {
+			System.out.println(result);
+		}
+	}
+	
 	// check this is the best place for comparator -- might be better in results?
 	private class SortByClosestMatchComparator implements Comparator<SearchResult<T>> {
 		public int compare(SearchResult<T> s1, SearchResult<T> s2) {
