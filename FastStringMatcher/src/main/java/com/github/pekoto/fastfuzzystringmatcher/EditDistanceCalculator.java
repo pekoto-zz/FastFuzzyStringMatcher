@@ -46,22 +46,22 @@ public class EditDistanceCalculator {
 			return str1.length();
 		}
 		
-		int str1Length = str1.length() + 1;                                                     
-	    int str2Length = str2.length() + 1;                                                     
+		int str1RowLength = str1.length() + 1;                                                     
+	    int str2RowLength = str2.length() + 1;                                                     
 	                                                                                    
-	    int[] previousRow = new int[str1Length];                                                     
-	    int[] currentRow = new int[str1Length];                                                  
+	    int[] previousRow = new int[str1RowLength];                                                     
+	    int[] currentRow = new int[str1RowLength];                                                  
 	                                                                                    
 	    // Initialise the first row of the distance matrix.
-	    for (int i = 0; i < str1Length; i++) {
+	    for (int i = 0; i < str1RowLength; i++) {
 	    		previousRow[i] = i;                                     
 	    }
 	                                                                                    	                                                                                    
-	    for (int rowIndex = 1; rowIndex < str2Length; rowIndex++) {                                                
+	    for (int rowIndex = 1; rowIndex < str2RowLength; rowIndex++) {                                                
 	        // Initialise the first column of the distance matrix                         
 	        currentRow[0] = rowIndex;                                                             
 	                                                                                    
-	        for(int colIndex = 1; colIndex < str1Length; colIndex++) {
+	        for(int colIndex = 1; colIndex < str1RowLength; colIndex++) {
 	        		char str1Char = Character.toLowerCase(str1.charAt(colIndex-1));
 	        		char str2Char = Character.toLowerCase(str2.charAt(rowIndex-1));
 	        	
@@ -81,7 +81,7 @@ public class EditDistanceCalculator {
 	    }
 	                                                                                    
 	    // The distance is the last element of the last row        
-	    return previousRow[str1Length-1];                                                          
+	    return previousRow[str1RowLength-1];                                                          
 	}
 	
 	private int min(int a, int b, int c) {

@@ -57,8 +57,7 @@ public class EnglishJapaneseDictionarySearcher {
 		return line.substring(beginIndex, endIndex);
 	}
 	
-	public SearchResultList<String> search(CharSequence word, float matchPercentage)
-	{
+	public SearchResultList<String> search(CharSequence word, float matchPercentage) {
 		return stringMatcher.search(word, matchPercentage);
 	}
 }

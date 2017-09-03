@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * Shows how the StringMatcher class can be used to build a translation memory dictionary.
  * The dictionary entries are taken from the JMDict project and are not optimised for
- * English lookup, but this class should show some applications.
+ * English lookup, but this class should show a general application.
  * <p>
  * Note: Due to rounding, strings that match slightly less than the requested percentage are sometimes returned.
  * I've left these in as it's better to have false positives than vice versa.
@@ -21,8 +21,7 @@ public class SearchDriver {
 
 	public static void main(String[] args) {
 		
-		try
-		{
+		try {
 			EnglishJapaneseDictionarySearcher engJpnDict = new EnglishJapaneseDictionarySearcher();
 			System.out.println(String.format("Finished loading %d terms", engJpnDict.getSize()));
 			
@@ -39,8 +38,7 @@ public class SearchDriver {
 			results = engJpnDict.search("ock", 75.0f);
 			results.print();
 		}
-		catch(IOException ioe)
-		{
+		catch(IOException ioe) {
 			System.out.println("Failed to load dictionary file.");
 		}	
 	}

@@ -65,28 +65,29 @@ public class StringMatcher<T> {
 			throw new IllegalArgumentException("Strings must not be empty");
 		}
 		
-		CharSequence normalizedKeyword = getNormalizedString(keyword);
+		CharSequence normalizedKeyword = getNormalizedKeyword(keyword);
 				
 		if(root == null) {
 			root = new Node<T>(keyword, normalizedKeyword, associatedData);
 		} else {
+			// Traverse through the tree, adding the string as a leaf related by edit distance
 			Node<T> current = root;
-			int distance = distanceCalculator.calculateEditDistance(current.normalizedKeyword, keyword);
+			int editDistance = distanceCalculator.calculateEditDistance(current.normalizedKeyword, keyword);
 			
-			while(current.containsChildWithDistance(distance)) {				
-				current = current.getChild(distance);
-				distance = distanceCalculator.calculateEditDistance(current.normalizedKeyword, keyword);
+			while(current.containsChildWithDistance(editDistance)) {				
+				current = current.getChild(editDistance);
+				editDistance = distanceCalculator.calculateEditDistance(current.normalizedKeyword, keyword);
 				
-				if(distance == 0) {
-					return;	// Duplicate
+				if(editDistance == 0) {
+					return;	// Duplicate (string already exists in tree)
 				}
 			}
 			
-			current.addChild(distance, keyword, normalizedKeyword, associatedData);
+			current.addChild(editDistance, keyword, normalizedKeyword, associatedData);
 		}
 	}
 	
-	private CharSequence getNormalizedString(CharSequence str) {
+	private CharSequence getNormalizedKeyword(CharSequence str) {
 		if(matchingOption == MatchingOption.REMOVE_SPACING_AND_LINEBREAKS) {
 			return removeSpacesAndLinebreaks(str);
 		} else {
@@ -98,19 +99,26 @@ public class StringMatcher<T> {
 		return str.toString().replaceAll("[\\t\\n\\r\\s]", "");
 	}
 	
+	// Search using % matching.
+	// More user-friendly and robust when searching strings of variable length,
+	// but may lead to strings slightly less than the matchPercentage being returned due to rounding.
 	public SearchResultList<T> search(CharSequence keyword, float matchPercentage) {
-		keyword = getNormalizedString(keyword);
+		keyword = getNormalizedKeyword(keyword);
 		int distanceThreshold = convertPercentageToEditDistance(keyword, matchPercentage);
 		
 		return searchTree(keyword, distanceThreshold);
 	}
 	
+	// Edit distance threshold from % = Keyword length - (keyword length * matchPercentage)/100
 	private int convertPercentageToEditDistance(CharSequence keyword, float matchPercentage) {
 		return keyword.length() - (Math.round((keyword.length() * matchPercentage)/100.0f));
 	}
 	
+	// Search using edit distance (chars different).
+	// Less user-friendly and less robust when strings are of variable length,
+	// but ensures only strings with a precise number of edits will be returned.
 	public SearchResultList<T> search(CharSequence keyword, int distanceThreshold) {
-		keyword = getNormalizedString(keyword);
+		keyword = getNormalizedKeyword(keyword);
 		return searchTree(keyword, distanceThreshold);
 	}
 	
@@ -118,25 +126,27 @@ public class StringMatcher<T> {
 		SearchResultList<T> results = new SearchResultList<T>();
 		
 		searchTree(root, keyword, distanceThreshold, results);
-		
 		results.sortByClosestMatch();
 		
 		return results;
 	}
 	
 	// Recursively search the tree, adding any data from nodes within the edit distance threshold.
-	// Results are stored in the results parameter. This is a bit dirty functionally, but since this
+	// Results are stored in the "results" parameter. This is a bit functionally dirty, but since this
 	// method is recursive, it saves a new collection being created/copied with every call.
 	private void searchTree(Node<T> node, CharSequence keyword, int distanceThreshold, List<SearchResult<T>> results) {
 		int currentDistance = distanceCalculator.calculateEditDistance(node.normalizedKeyword, keyword);
-		int minDistance = currentDistance - distanceThreshold;
-		int maxDistance = currentDistance + distanceThreshold;
 		
 		if(currentDistance <= distanceThreshold) {
+			// Match found
 			float percentageDifference = getPercentageDifference(node.normalizedKeyword, keyword, currentDistance);
 			SearchResult<T> result = new SearchResult<T>(node.originalKeyword, node.associatedData, percentageDifference);
 			results.add(result);
 		}
+		
+		// Get the children to search next
+		int minDistance = currentDistance - distanceThreshold;
+		int maxDistance = currentDistance + distanceThreshold;
 		
 		List<Integer> childKeysWithinDistanceThreshold = node.getChildKeysWithinDistance(minDistance, maxDistance);
 		
@@ -162,9 +172,9 @@ public class StringMatcher<T> {
 	 */
 	private static class Node<T> {
 		private CharSequence originalKeyword;
-		private CharSequence normalizedKeyword;
+		private CharSequence normalizedKeyword;		// Used for matching
 		private T associatedData;
-		private HashMap<Integer, Node<T>> children;
+		private HashMap<Integer, Node<T>> children;	// Children are keyed on edit distance
 		
 		public Node(CharSequence keyword, CharSequence normalizedKeyword, T associatedData) {
 			this.originalKeyword = keyword;
