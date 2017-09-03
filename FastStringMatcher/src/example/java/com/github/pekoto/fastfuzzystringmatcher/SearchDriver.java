@@ -7,9 +7,12 @@ import java.io.IOException;
  * The dictionary entries are taken from the JMDict project and are not optimised for
  * English lookup, but this class should show some applications.
  * <p>
+ * Note: Due to rounding, strings that match slightly less than the requested percentage are sometimes returned.
+ * I've left these in as it's better to have false positives than vice versa.
+ * <p>
  * See <a href="http://www.edrdg.org/jmdict/j_jmdict.html">The JMDict Project</a>.
  * <p>
- * See the unit test classes in src/test/java for further examples of usage.
+ * See also unit tests in src/test/java for further examples of usage.
  * 
  * @author Graham McRobbie
  *

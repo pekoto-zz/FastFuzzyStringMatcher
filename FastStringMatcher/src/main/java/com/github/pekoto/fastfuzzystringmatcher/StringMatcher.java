@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Builds tree based on edit distance that allows quick fuzzy searching of string keywords, case insensitive.
+ * Builds a tree based on edit distance that allows quick fuzzy searching of string keywords, case insensitive.
  * Also known as a BK Tree.
  * See <a href="https://en.wikipedia.org/wiki/BK-tree">Wikipedia</a>
  * <dl>
@@ -15,6 +15,10 @@ import java.util.stream.Collectors;
  * This implementation also allows the retrieval of strings using percentage matching.
  * This is generally much more practical than searching purely on edit distance,
  * unless all of your strings are of fixed length.		
+ * <p>
+ * Due to rounding, it's possible that strings that match slightly less than the requested
+ * percentage may be returned. I've left these in as it's better to have false positives than
+ * vice versa.
  * </dd>
  * <p>
  * <dt><span class="strong">Generic Type/Associated Data</span></dt>
@@ -32,11 +36,11 @@ import java.util.stream.Collectors;
  * <dt><span class="strong">Line Breaks/Spaces</span></dt>
  * <dd>
  * Large chunks of text can appear different due to line break/white space differences. In most cases,
- * we only want to compare the text itself, so the class allows you to remove line breaks and spaces
+ * we only want to compare the text itself, so the class allows you to ignore line breaks and spaces
  * for comparison purposes.
  * </dd>
-
  * </dl>
+ *
  * @author Graham McRobbie
  *
  * @param <T> The type of data associated with each string keyword.
@@ -82,8 +86,7 @@ public class StringMatcher<T> {
 		}
 	}
 	
-	private CharSequence getNormalizedString(CharSequence str) 
-	{
+	private CharSequence getNormalizedString(CharSequence str) {
 		if(matchingOption == MatchingOption.REMOVE_SPACING_AND_LINEBREAKS) {
 			return removeSpacesAndLinebreaks(str);
 		} else {

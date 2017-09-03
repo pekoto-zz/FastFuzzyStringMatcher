@@ -1,7 +1,7 @@
 package com.github.pekoto.fastfuzzystringmatcher;
 
 /**
- * A result returned after searching the BK tree.
+ * A result returned after searching using the string matcher.
  * 
  * @author Graham McRobbie
  *
@@ -11,9 +11,7 @@ public class SearchResult<T> {
 	private CharSequence keyword;
 	private T associatedData;
 	private float matchPercentage;
-	
-	public SearchResult() { }
-	
+		
 	public SearchResult(CharSequence keyword, T associatedData, float matchPercentage) {
 		this.keyword = keyword;
 		this.associatedData = associatedData;

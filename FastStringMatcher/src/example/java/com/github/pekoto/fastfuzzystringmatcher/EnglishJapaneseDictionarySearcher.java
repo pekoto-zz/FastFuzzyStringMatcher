@@ -6,8 +6,8 @@ import java.io.IOException;
 
 
 /**
- * An English --> Japanese dictionary with fuzzy lookup built using
- * the StringMatcher class.
+ * An English --> Japanese dictionary with fuzzy lookup.
+ * Built using the StringMatcher class.
  * 
  * @author Graham McRobbie
  *
