@@ -14,24 +14,24 @@ public class StringMatcherTest {
 	
 	@BeforeClass
 	public static void setupStringMatcher() {
-		stringMatcher.Add("0123456789", "10 digit long string");
-		stringMatcher.Add("012345678", "9 digit long string");
-		stringMatcher.Add("01234567", "8 digit long string");
-		stringMatcher.Add("0123456", "7 digit long string");
-		stringMatcher.Add("012345", "6 digit long string");
-		stringMatcher.Add("01234", "5 digit long string");
-		stringMatcher.Add("0123", "4 digit long string");
-		stringMatcher.Add("012", "3 digit long string");
-		stringMatcher.Add("01", "2 digit long string");
-		stringMatcher.Add("0", "1 digit long string");
+		stringMatcher.add("0123456789", "10 digit long string");
+		stringMatcher.add("012345678", "9 digit long string");
+		stringMatcher.add("01234567", "8 digit long string");
+		stringMatcher.add("0123456", "7 digit long string");
+		stringMatcher.add("012345", "6 digit long string");
+		stringMatcher.add("01234", "5 digit long string");
+		stringMatcher.add("0123", "4 digit long string");
+		stringMatcher.add("012", "3 digit long string");
+		stringMatcher.add("01", "2 digit long string");
+		stringMatcher.add("0", "1 digit long string");
 		
-		stringMatcher.Add("Test", "String with uppercase char");
-		stringMatcher.Add("test", "String with all lowercase chars");
+		stringMatcher.add("Test", "String with uppercase char");
+		stringMatcher.add("test", "String with all lowercase chars");
 		
-		stringMatcher.Add("This is a test", "Multiple word string");
+		stringMatcher.add("This is a test", "Multiple word string");
 		
-		stringMatcher.Add("Cat", "Short string");
-		stringMatcher.Add("Bats", "Slightly longer short string");
+		stringMatcher.add("Cat", "Short string");
+		stringMatcher.add("Bats", "Slightly longer short string");
 	}
 	
 	@Test
@@ -110,13 +110,13 @@ public class StringMatcherTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddEmptyString() {
 		// Throws IllegalArgumentException
-		stringMatcher.Add("", "Empty string");
+		stringMatcher.add("", "Empty string");
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddNullString() {
 		// Throws IllegalArgumentException
-		stringMatcher.Add(null, "Null string");
+		stringMatcher.add(null, "Null string");
 	}
 	
 	@Test
@@ -145,7 +145,7 @@ public class StringMatcherTest {
 	public void testIgnoreSpaces() {
 		StringMatcher<String> ignoreSpacesMatcher = new StringMatcher<String>(MatchingOption.REMOVE_SPACING_AND_LINEBREAKS);
 		
-		ignoreSpacesMatcher.Add("This is a test", "A string with spaces");
+		ignoreSpacesMatcher.add("This is a test", "A string with spaces");
 		
 		SearchResultList<String> results = ignoreSpacesMatcher.search("This is  atest", 100.0f);
 		
@@ -157,7 +157,7 @@ public class StringMatcherTest {
 	public void testIgnoreTabs() {
 		StringMatcher<String> ignoreTabsMatcher = new StringMatcher<String>(MatchingOption.REMOVE_SPACING_AND_LINEBREAKS);
 
-		ignoreTabsMatcher.Add("\t\tThis is some tabbed data", "A string with tabs");
+		ignoreTabsMatcher.add("\t\tThis is some tabbed data", "A string with tabs");
 		
 		SearchResultList<String> results = ignoreTabsMatcher.search("This is some tabbed \tdata", 100.0f);
 		
@@ -169,7 +169,7 @@ public class StringMatcherTest {
 	public void testIgnoreLinebreaks() {
 		StringMatcher<String> ignoreLinebreaksMatcher = new StringMatcher<String>(MatchingOption.REMOVE_SPACING_AND_LINEBREAKS);
 		
-		ignoreLinebreaksMatcher.Add("This has\nsome line\nbreaks.", "A string with linebreaks");
+		ignoreLinebreaksMatcher.add("This has\nsome line\nbreaks.", "A string with linebreaks");
 		
 		SearchResultList<String> results = ignoreLinebreaksMatcher.search("This has some line breaks.", 100.0f);
 		

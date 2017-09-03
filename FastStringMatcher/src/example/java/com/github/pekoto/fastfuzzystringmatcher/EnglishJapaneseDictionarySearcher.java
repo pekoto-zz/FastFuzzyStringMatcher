@@ -42,7 +42,7 @@ public class EnglishJapaneseDictionarySearcher {
 	        if(line.startsWith("msgid")) {
 	        		englishTerm = getParsedTerm(line);
 	        } else if (line.startsWith("msgstr")) {
-	        		stringMatcher.Add(englishTerm, getParsedTerm(line));
+	        		stringMatcher.add(englishTerm, getParsedTerm(line));
 	        		size++;
 	        }
 	     }

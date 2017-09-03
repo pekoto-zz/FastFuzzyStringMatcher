@@ -56,7 +56,7 @@ public class StringMatcher<T> {
 		this.matchingOption = matchingOption;
 	}
 	
-	public void Add(CharSequence keyword, T associatedData) {
+	public void add(CharSequence keyword, T associatedData) {
 		if(keyword == null) {
 			throw new IllegalArgumentException("Strings must not be null");
 		}
