@@ -19,9 +19,9 @@ The main class can be found in `src/main/java` --> package: `com.gitub.pekoto.fa
 ### Usage
 Usage is fairly simple:
 
-1. Delcare a new instance `StringMatcher`
+1. Delcare a new instance of `StringMatcher`
 2. Add your data by calling `yourStringMatcherInstance.add(...)`
-3. Search for your data by called `yourStringMatcherInstance.search(...)`
+3. Search for your data by calling `yourStringMatcherInstance.search(...)`
 
 __Example:__
 
