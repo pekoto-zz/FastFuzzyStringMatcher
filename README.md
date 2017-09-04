@@ -79,7 +79,7 @@ No problem. We just move down to cat, calculate the edit distance between __cat_
 Okay, now we're ready to search!
 
 Imagine we accidentally typed in the word __zat__, and we want to get a list of potential corrections for our typo.
-Let's say we want to search all of our nodes within an maximum edit distance of 1.
+Let's say we want to search all of our nodes with a maximum edit distance of 1.
 
 First, we compare __zat__ with our root, __hat__. Sure enough, the edit distance is 1, which is within our threshold, so we add __hat__ to our list of results to return.
 
