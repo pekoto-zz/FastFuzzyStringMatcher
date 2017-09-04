@@ -19,7 +19,7 @@ The main class can be found in `src/main/java` --> package: `com.gitub.pekoto.fa
 ### Usage
 Usage is fairly simple:
 
-1. Delcare a new instance: `StringMatcher<T> myStringMatcher = new StringMatcher<T>();`
+1. Declare a new instance: `StringMatcher<T> myStringMatcher = new StringMatcher<T>();`
 2. Add your data by calling `myStringMatcher.add(...)`
 3. Search for your data by calling `myStringMatcher.search(...)`
 
@@ -105,7 +105,7 @@ Oh yeah, and cat has a child node. We repeat the step we did at the root but usi
 
 This brings us down to __bat__. We check the edit distance, and again find it's within our threshold.
 
-With that we're done, and return __hat__, __cat__, and __bat__! We can imagine any of these might be a typo for __zat__. If you wanted to predict which of the three words was most likely meant by the user, you could also take into account which keys are most commonly mistyped. For example, __c__ is closest to __z__ on a standard QUERTY keyboard, so you could guess that they probably meant __cat__.
+With that we're done, and return __hat__, __cat__, and __bat__! We can imagine any of these might be a typo for __zat__. If you wanted to predict which of the three words was most likely meant by the user, you could also take into account which keys are most commonly mistyped. For example, __c__ is closest to __z__ on a standard QWERTY keyboard, so you could guess that they probably meant __cat__.
 
 <img src="https://github.com/pekoto/FastFuzzyStringMatcher/blob/master/images/search-4.png" width="354" height="355" />
 
@@ -116,6 +116,6 @@ __Exercise__
 What would happen if __zap__ had been added to our BK tree?
 
 ## Thoughts
-The BK tree is a simple data structure that can deliver decent performance increases when you need to search a large number of strings. They're quick to implement and having fuzzy searching and custom spell checking can be a super nice feature for your application, especially when you're dealing with translation data or you have lots of custom strings that won't be picked up by a standard spellchecker, for example, fund codes or stock ticker symbols.
+The BK tree is a simple data structure that can deliver decent performance increases when you need to search a large number of strings. They're quick to implement and having fuzzy searching and custom spell checking can be a super nice feature for your application, especially when you're dealing with translation data or you have lots of custom strings that won't be picked up by a standard spell checker, for example, fund codes or stock ticker symbols.
 
 Happy searching :)
