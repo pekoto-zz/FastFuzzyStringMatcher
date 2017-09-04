@@ -93,13 +93,13 @@ Next, we examine all of the child nodes within the current edit distance +/- our
 So we'll examine all of the children that have an edit distance between 0-2.
 First, let's check out __kate__.
 
-<img src="https://github.com/pekoto/FastFuzzyStringMatcher/blob/master/images/search-2.png" width="322" height="355" />
+<img src="https://github.com/pekoto/FastFuzzyStringMatcher/blob/master/images/search-2.png" width="354" height="316" />
 
 Oh uh, the edit distance between __zat__ and __kate__ is 2, so we ignore this node, and there are no children, so let's back up.
 
 __cat__ has an edit distance of 1, so let's check it out. The edit distance between __zat__ and __cat__ is also 1, which is within our threshold, so whoopee -- we have another results.
 
-<img src="https://github.com/pekoto/FastFuzzyStringMatcher/blob/master/images/search-3.png" width="322" height="355" />
+<img src="https://github.com/pekoto/FastFuzzyStringMatcher/blob/master/images/search-3.png" width="354" height="355" />
 
 Oh yeah, cat has a child node. We repeat the step we did at the root but using our current node: work out the maximum and minimum threshold based on the edit distance between __zat__ and __cat__, and then examine children within that threshold.
 
@@ -107,7 +107,7 @@ This brings us down to __bat__. We check the edit distance, and again find it's 
 
 With that we're done, and return __hat__, __cat__, and __bat__!
 
-<img src="https://github.com/pekoto/FastFuzzyStringMatcher/blob/master/images/search-4.png" width="322" height="355" />
+<img src="https://github.com/pekoto/FastFuzzyStringMatcher/blob/master/images/search-4.png" width="354" height="355" />
 
 Overall, we still ended up searching 80% of our tree, but even in a bad scenario like this, 80% can still be a significant saving if you have, for example, 500,000 strings in your collection.
 
@@ -117,4 +117,4 @@ What would happen if __zap__ had been added to our BK tree?
 ## Thoughts
 The BK tree is a simple data structure that can deliver significant performance increases when you need to search a large number of strings. They're also a quick way to implement fuzzy searching or spell checking.
 
-Happy string searching :)
+Happy searching :)
