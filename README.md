@@ -116,6 +116,6 @@ __Exercise__
 What would happen if __zap__ had been added to our BK tree?
 
 ## Thoughts
-The BK tree is a simple data structure that can deliver decent performance gains when you need to search a large number of strings. They're quick to implement and having fuzzy searching and custom spell checking can be a super nice feature for your application, especially when you're dealing with translation data or you have lots of custom strings that won't be picked up by a standard spell checker, for example, fund codes or stock ticker symbols.
+The BK tree is a simple data structure that can deliver decent performance gains when you need to search a large number of strings. They're quick to implement and having fuzzy searching and custom spell checking can be a super nice feature for your application, especially when you're dealing with translation data or you have lots of custom strings that won't be picked up by a standard spell checker, like fund codes, stock ticker symbols, or fictional character names.
 
 Happy searching :)
