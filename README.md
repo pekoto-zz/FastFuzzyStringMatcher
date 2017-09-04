@@ -105,7 +105,7 @@ Oh yeah, and cat has a child node. We repeat the step we did at the root but usi
 
 This brings us down to __bat__. We check the edit distance, and again find it's within our threshold.
 
-With that we're done, and return __hat__, __cat__, and __bat__! We can imagine any of these might be a typo for __zat__. If you wanted to predict which of the three words was most likely meant by the user, you could also take into account which keys are most commonly mistyped. For example, __c__ is closest to __z__ on a standard QWERTY keyboard, so you could guess that they probably meant __cat__.
+With that we're done, and we return __hat__, __cat__, and __bat__. We can imagine any of these might be a typo for __zat__. If you wanted to predict which of the three words was most likely meant by the user, you could also take into account which keys are most commonly mistyped. For example, __c__ is closest to __z__ on a standard QWERTY keyboard, so you could guess that they probably meant __cat__.
 
 <img src="https://github.com/pekoto/FastFuzzyStringMatcher/blob/master/images/search-4.png" width="354" height="355" />
 
