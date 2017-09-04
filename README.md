@@ -19,9 +19,9 @@ The main class can be found in `src/main/java` --> package: `com.gitub.pekoto.fa
 ### Usage
 Usage is fairly simple:
 
-1. Delcare a new instance of `StringMatcher`
-2. Add your data by calling `yourStringMatcherInstance.add(...)`
-3. Search for your data by calling `yourStringMatcherInstance.search(...)`
+1. Delcare a new instance of `StringMatcher<T> myStringMatcher = new StringMatcher<T>();`
+2. Add your data by calling `myStringMatcher.add(...)`
+3. Search for your data by calling `myStringMatcher.search(...)`
 
 `EditDistanceCalculator.java` is public,  so it can also be used independently to calculate the edit distance between two `CharSequence` objects.
 
