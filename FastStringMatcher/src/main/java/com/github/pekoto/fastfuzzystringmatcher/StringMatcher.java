@@ -21,10 +21,10 @@ import java.util.stream.Collectors;
  * vice versa.
  * </dd>
  * <p>
- * <dt><span class="strong">Generic Type/Associated Data</span></dt>
+ * <dt><span class="strong">Generic Data Association</span></dt>
  * <dd>
  * You can store some associated data with each string keyword.
- * The generic parameters refers to this data type.
+ * The generic parameter refers to this data type.
  * <p>
  * <strong>Example uses:</strong>
  * <ul>
@@ -134,7 +134,7 @@ public class StringMatcher<T> {
 	// Recursively search the tree, adding any data from nodes within the edit distance threshold.
 	// Results are stored in the "results" parameter. This is a bit functionally dirty, but since this
 	// method is recursive, it saves a new collection being created/copied with every call.
-	private void searchTree(Node<T> node, CharSequence keyword, int distanceThreshold, List<SearchResult<T>> results) {
+	private void searchTree(Node<T> node, CharSequence keyword, int distanceThreshold, SearchResultList<T> results) {
 		int currentDistance = distanceCalculator.calculateEditDistance(node.normalizedKeyword, keyword);
 		
 		if(currentDistance <= distanceThreshold) {
