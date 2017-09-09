@@ -33,7 +33,7 @@ These are just standard JUnit tests and can be run in Eclipse by right-clicking 
 ### Running the example
 `src/example/java` shows how the `StringMatcher` can be used to implement a translation memory dictionary with fuzzy matching. `EnglishJapaneseDictionarySearcher.java` contains the implementation of the translation memory dictionary. `SearchDriver.java` shows how it can be used. 
 
-The dictionary loads around 5000 entries from the [JMDict Project](http://www.edrdg.org/jmdict/j_jmdict.html). `StringMatcher` should be able to handle a lot more than 5,000 translation pairs, but I wanted to keep the download size fairly small.
+The dictionary loads around 50,000 entries from the [JMDict Project](http://www.edrdg.org/jmdict/j_jmdict.html). `StringMatcher` should be able to handle a lot more than 50,000 translation pairs, but I wanted to keep the download size fairly small.
 
 ## How Does It All Work?
 
