@@ -1,5 +1,6 @@
 # FastFuzzyStringMatcher
 FastFuzzyStringMatcher is a BK tree implementation for quick in-memory string matching.
+(Also available for [.NET](https://github.com/pekoto/FastFuzzyStringMatcherDotNet)).
 
 ## Features
 - Fast, fuzzy, string matching.
