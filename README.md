@@ -13,7 +13,7 @@ Although hash maps can be used for exact string matching, and tries can be used 
 FastFuzzyStringMatcher builds a [BK tree](https://en.wikipedia.org/wiki/BK-tree) to make searching a lot more efficient.
 
 ## Setup
-The project was built using Eclipse and Java 8 and should build cleanly, assuming you have the latest JDK installed.
+The project was originally built using Eclipse and Java 8 and should build cleanly, assuming you have the latest JDK installed.
 
 The main class can be found in `src/main/java` --> package: `com.gitub.pekoto.fastfuzzystringmatcher` --> `StringMatcher.java`.
 
